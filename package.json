@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typegen": "npx pocketbase-typegen --db ./pocketbase/pb_data/data.db -o .src/pocketbase-typegen.ts"
+    "typegen": "npx pocketbase-typegen --db ./pocketbase/pb_data/data.db -o ./src/pocketbase-typegen.ts"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.3",

@@ -1,0 +1,7 @@
+---
+import { pb } from "../../backend";
+
+const personnes = await pb.collection("personnes").getFullList();
+export const prerender = true
+---
+<pre>{JSON.stringify(personnes, null, 2)}</pre>

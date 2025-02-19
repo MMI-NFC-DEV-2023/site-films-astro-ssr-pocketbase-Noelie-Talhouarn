@@ -24,5 +24,5 @@ const films = await Astro.locals.pb
 
 <Layout>
   {films.map((film) => <LinkFilm {...film} />)}
-  <Debug {films} />
+  <!-- <Debug {films} /> -->
 </Layout>

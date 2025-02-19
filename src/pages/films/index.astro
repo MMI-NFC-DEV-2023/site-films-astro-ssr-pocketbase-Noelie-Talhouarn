@@ -2,6 +2,9 @@
 import Debug from "astro/components/Debug.astro";
 import { pb } from "../../backend";
 import Layout from "../../layouts/Layout.astro";
+
+export const prerender = false;
+
 type Response = FilmsResponse<{ 
   producteur: PersonnesResponse
   scenaristes: PersonnesResponse[];
@@ -16,7 +19,6 @@ import type {
 const films = await Astro.locals.pb
   .collection<Response>("films")
   .getFullList({ expand: "producteur, scenaristes, roles.acteur" });
-export const prerender = false;
 ---
 
 <Layout>

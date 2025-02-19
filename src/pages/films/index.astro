@@ -2,12 +2,37 @@
 import Debug from "astro/components/Debug.astro";
 import { pb } from "../../backend";
 import Layout from "../../layouts/Layout.astro";
+type Response = FilmsResponse<{ 
+  producteur: PersonnesResponse
+  scenaristes: PersonnesResponse[];
+  roles: RolesResponse<{acteur: PersonnesResponse}>[];
+ }>;
+import type {
+  FilmsResponse,
+  PersonnesResponse,
+  RolesResponse,
+} from "../../pocketbase-typegen";
 
-const films = await Astro.locals.pb.collection("films").getFullList();
+const films = await Astro.locals.pb
+  .collection<Response>("films")
+  .getFullList({ expand: "producteur, scenaristes, roles.acteur" });
 export const prerender = false;
 ---
 
-<!-- <pre>{JSON.stringify(personnes, null, 2)}</pre> -->
 <Layout>
+  {
+    films.map((film) => (
+      <div>
+        <h2 class="font-bold text-2xl">Films : {film.titre}</h2>
+        <p>synopsis : {film.synopsis}</p>
+        <p class="text-fuchsia-600">producteur : {film.expand?.producteur.nom}</p>
+        <p>scenaristes : {film.expand?.scenaristes.map(s => <span>{s.nom + ", "}</span>)}</p>
+        <p>Date de sortie : {film.date_sortie}</p>
+        <p>Durée : {film.duree}</p>
+        <p>Roles : {film.expand?.roles.map(r => <span>Nom du rôle : {r.nom_role + " "}</span>
+            <span>Joué par : {r.expand?.acteur.nom}</span>)}</p>
+      </div>
+    ))
+  }
   <Debug {films} />
 </Layout>

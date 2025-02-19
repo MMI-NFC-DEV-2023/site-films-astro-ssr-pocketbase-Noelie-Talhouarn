@@ -1,0 +1,7 @@
+---
+import type { FilmsResponse } from "../pocketbase-typegen";
+const film = Astro.props;
+type Props = FilmsResponse;
+---
+
+<a href={`/films/${film.id}`}>{film.titre}</a>

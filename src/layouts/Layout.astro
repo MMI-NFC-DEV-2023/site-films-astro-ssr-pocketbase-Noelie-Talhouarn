@@ -1,31 +1,31 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface LayoutProps {
-	pageTitle: string;
+  pageTitle: string;
 }
 
-const {pageTitle} = Astro.props
+const { pageTitle } = Astro.props;
 ---
 
-
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-	</head>
-	<body>
-		<nav>
-			<a href="/">home</a>
-			<a href="/personnes">Liste de personnes</a>
-			<a href="/auth-password">s'authentifier</a>
-			<a href="/films">Liste des films</a>
-		</nav>
-		<slot />
-	</body>
-</html>
+<html lang="en" x-data="{menuOpen: false}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <button aria-controls="navigation" :aria-expanded="menuOpen" @click="menuOpen = !menuOpen">Menu</button>
+  <body>
+    <nav :aria-hidden="!menuOpen" x-show="menuOpen" id="navigation">
+      <a href="/">home</a>
+      <a href="/personnes">Liste de personnes</a>
+      <a href="/auth-password">s'authentifier</a>
+      <a href="/films">Liste des films</a>
+    </nav>
+    <slot />
+  </body>
 
+</html>

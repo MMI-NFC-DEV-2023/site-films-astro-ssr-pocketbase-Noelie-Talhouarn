@@ -3,6 +3,8 @@ export const prerender = false;
 const id = Astro.params.id;
 console.log(id);
 
+import LinkPersonne from "../../components/LinkPersonne.astro";
+import Layout from "../../layouts/Layout.astro";
 import type {
   FilmsResponse,
   PersonnesResponse,
@@ -18,13 +20,15 @@ const film = await Astro.locals.pb
   .getOne(id!,{ expand: "producteur, scenaristes, roles.acteur" });
 ---
 <!-- affichage d'un film  -->
+ <Layout pageTitle={`film : ${film.titre}`}>
 <div>
         <h2 class="font-bold text-2xl">Films : {film.titre}</h2>
         <p>synopsis : {film.synopsis}</p>
-        <p class="text-fuchsia-600">producteur : {film.expand?.producteur.nom}</p>
+        <p class="text-fuchsia-600">producteur : <LinkPersonne {...film.expand?.producteur!} /></p>
         <p>scenaristes : {film.expand?.scenaristes.map(s => <span>{s.nom + ", "}</span>)}</p>
         <p>Date de sortie : {film.date_sortie}</p>
         <p>Durée : {film.duree}</p>
         <p>Roles : {film.expand?.roles.map(r => <span>Nom du rôle : {r.nom_role + " "}</span>
-            <span>Joué par : {r.expand?.acteur.nom}</span>)}</p>
+            <span>Joué par : <LinkPersonne {...r.expand?.acteur!} /></span>)}</p>
       </div>
+      </Layout>

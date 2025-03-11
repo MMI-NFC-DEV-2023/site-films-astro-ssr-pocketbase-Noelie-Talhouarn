@@ -26,6 +26,7 @@ const personne = await Astro.locals.pb
 <Layout pageTitle="Liste des personnes">
   <div>
     <h2>Personne : {personne.nom}</h2>
+    {Astro.locals.pb.authStore.isValid && <a href={`/personnes/edit/${personne.id}`}>Edit</a>}
 
     {
       personne.expand?.roles_via_acteur && (

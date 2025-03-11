@@ -122,7 +122,7 @@ export type PersonnesRecord = {
 	nationalite?: PersonnesNationaliteOptions
 	nom?: string
 	prenom?: string
-	profession?: PersonnesProfessionOptions
+	profession?: PersonnesProfessionOptions[]
 	updated?: IsoDateString
 }
 
